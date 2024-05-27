@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const newTicket = await response.json();
             tickets.push(newTicket);
             renderTickets();
+            closeModal(addTicketModal);
         } catch (error) {
             console.error('Error creating ticket:', error);
         }
@@ -84,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const index = tickets.findIndex(t => t.id === updatedTicket.id);
             tickets[index] = updatedTicket;
             renderTickets();
+            closeModal(editTicketModal);
         } catch (error) {
             console.error('Error updating ticket:', error);
         }
@@ -96,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             tickets = tickets.filter(t => t.id !== ticketId);
             renderTickets();
+            closeModal(deleteConfirmationModal);
         } catch (error) {
             console.error('Error deleting ticket:', error);
         }
@@ -133,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const description = document.getElementById('add-description').value;
         const status = document.getElementById('add-status').checked;
         addTicket({ name, description, status });
-        closeModal(addTicketModal);
         addTicketForm.reset();
     });
 
@@ -144,12 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const description = document.getElementById('edit-description').value;
         const status = document.getElementById('edit-status').checked;
         updateTicket({ id, name, description, status });
-        closeModal(editTicketModal);
     });
 
     confirmDeleteButton.addEventListener('click', () => {
         deleteTicket(currentTicketId);
-        closeModal(deleteConfirmationModal);
     });
 
     cancelDeleteButton.addEventListener('click', () => closeModal(deleteConfirmationModal));
