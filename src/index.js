@@ -19,6 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'none';
     };
 
+    closeModal(addTicketModal);
+    closeModal(editTicketModal);
+    closeModal(deleteConfirmationModal);
+
     const fetchTickets = async () => {
         try {
             const response = await fetch('http://localhost:3000/tickets?method=allTickets');
