@@ -40,24 +40,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button class="delete-button" data-id="${ticket.id}">x</button>
                 </div>`;
             
+            li.querySelector('.ticket-body').addEventListener('click', () => showTicketDetails(ticket.id));
+            li.querySelector('.edit-button').addEventListener('click', (event) => {
+                event.stopPropagation();
+                openEditModal(ticket.id);
+            });
+            li.querySelector('.delete-button').addEventListener('click', (event) => {
+                event.stopPropagation();
+                openDeleteModal(ticket.id);
+            });
+
             ticketsList.appendChild(li);
-        });
-        attachEventListeners();
-    };
-
-    const attachEventListeners = () => {
-        document.querySelectorAll('.edit-button').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const ticketId = e.target.getAttribute('data-id');
-                openEditModal(ticketId);
-            });
-        });
-
-        document.querySelectorAll('.delete-button').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const ticketId = e.target.getAttribute('data-id');
-                openDeleteModal(ticketId);
-            });
         });
     };
 
@@ -132,41 +125,38 @@ document.addEventListener('DOMContentLoaded', () => {
         openModal(deleteConfirmationModal);
     };
 
-    const setupModalHandlers = () => {
-        addTicketButton.addEventListener('click', () => openModal(addTicketModal));
+    addTicketButton.addEventListener('click', () => openModal(addTicketModal));
 
-        addTicketForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('add-name').value;
-            const description = document.getElementById('add-description').value;
-            const status = document.getElementById('add-status').checked;
-            addTicket({ name, description, status });
-            closeModal(addTicketModal);
-            addTicketForm.reset();
-        });
+    addTicketForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('add-name').value;
+        const description = document.getElementById('add-description').value;
+        const status = document.getElementById('add-status').checked;
+        addTicket({ name, description, status });
+        closeModal(addTicketModal);
+        addTicketForm.reset();
+    });
 
-        editTicketForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const id = document.getElementById('edit-id').value;
-            const name = document.getElementById('edit-name').value;
-            const description = document.getElementById('edit-description').value;
-            const status = document.getElementById('edit-status').checked;
-            updateTicket({ id, name, description, status });
-            closeModal(editTicketModal);
-        });
+    editTicketForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = document.getElementById('edit-id').value;
+        const name = document.getElementById('edit-name').value;
+        const description = document.getElementById('edit-description').value;
+        const status = document.getElementById('edit-status').checked;
+        updateTicket({ id, name, description, status });
+        closeModal(editTicketModal);
+    });
 
-        confirmDeleteButton.addEventListener('click', () => {
-            deleteTicket(currentTicketId);
-            closeModal(deleteConfirmationModal);
-        });
+    confirmDeleteButton.addEventListener('click', () => {
+        deleteTicket(currentTicketId);
+        closeModal(deleteConfirmationModal);
+    });
 
-        cancelDeleteButton.addEventListener('click', () => closeModal(deleteConfirmationModal));
+    cancelDeleteButton.addEventListener('click', () => closeModal(deleteConfirmationModal));
 
-        window.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal')) closeModal(e.target);
-        });
-    };
+    window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) closeModal(e.target);
+    });
 
-    setupModalHandlers();
     fetchTickets();
 });
