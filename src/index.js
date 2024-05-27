@@ -40,11 +40,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     <button class="delete-button" data-id="${ticket.id}">x</button>
                 </div>`;
             
-            li.querySelector('.ticket-body').addEventListener('click', () => showTicketDetails(ticket.id));
-            li.querySelector('.edit-button').addEventListener('click', () => openEditModal(ticket.id));
-            li.querySelector('.delete-button').addEventListener('click', () => openDeleteModal(ticket.id));
-
             ticketsList.appendChild(li);
+        });
+        attachEventListeners();
+    };
+
+    const attachEventListeners = () => {
+        document.querySelectorAll('.edit-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const ticketId = e.target.getAttribute('data-id');
+                openEditModal(ticketId);
+            });
+        });
+
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const ticketId = e.target.getAttribute('data-id');
+                openDeleteModal(ticketId);
+            });
         });
     };
 
