@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const fetchTickets = async () => {
         try {
-            const response = await fetch('http://localhost:3000/tickets?method=allTickets');
+            const response = await fetch('https://help-request-management.onrender.com/tickets?method=allTickets');
             tickets = await response.json();
             renderTickets();
         } catch (error) {
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const addTicket = async (ticket) => {
         try {
-            const response = await fetch('http://localhost:3000/ticket?method=createTicket', {
+            const response = await fetch('https://help-request-management.onrender.com/ticket?method=createTicket', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const updateTicket = async (ticket) => {
         try {
-            const response = await fetch('http://localhost:3000/ticket?method=updateTicket', {
+            const response = await fetch('https://help-request-management.onrender.com/ticket?method=updateTicket', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const deleteTicket = async (ticketId) => {
         try {
-            await fetch(`http://localhost:3000/ticket?method=deleteTicket&id=${ticketId}`, {
+            await fetch(`https://help-request-management.onrender.com/ticket?method=deleteTicket&id=${ticketId}`, {
                 method: 'DELETE'
             });
             tickets = tickets.filter(t => t.id !== ticketId);
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const showTicketDetails = async (ticketId) => {
         try {
-            const response = await fetch(`http://localhost:3000/ticket?method=ticketById&id=${ticketId}`);
+            const response = await fetch(`https://help-request-management.onrender.com/ticket?method=ticketById&id=${ticketId}`);
             const ticket = await response.json();
             alert(`Name: ${ticket.name}\nDescription: ${ticket.description}\nStatus: ${ticket.status ? 'Done' : 'Not Done'}`);
         } catch (error) {
