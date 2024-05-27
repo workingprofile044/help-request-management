@@ -145,6 +145,16 @@ document.addEventListener('DOMContentLoaded', () => {
             addTicketForm.reset();
         });
 
+        editTicketForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('edit-id').value;
+            const name = document.getElementById('edit-name').value;
+            const description = document.getElementById('edit-description').value;
+            const status = document.getElementById('edit-status').checked;
+            updateTicket({ id, name, description, status });
+            closeModal(editTicketModal);
+        });
+
         confirmDeleteButton.addEventListener('click', () => {
             deleteTicket(currentTicketId);
             closeModal(deleteConfirmationModal);
